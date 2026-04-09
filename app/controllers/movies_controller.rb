@@ -51,11 +51,7 @@ class MoviesController < ApplicationController
       redirect_to search_tmdb_path and return
     end
 
-    @movies = Movie.find_in_tmdb(
-      params[:search_terms],
-      params[:release_year],
-      params[:language]
-    )
+    @movies = Movie.find_in_tmdb(params[:search_terms])
 
     if @movies.empty?
       flash[:warning] = 'No movies found with given parameters!'

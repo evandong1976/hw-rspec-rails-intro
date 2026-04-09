@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Movie do
   describe 'searching TMDB by keyword' do
     it 'calls Faraday gem' do
-      expect(Faraday).to receive(:get)
+      expect(Faraday).to receive(:get).and_call_original
       Movie.find_in_tmdb({ title: 'hardware' })
     end
 
