@@ -34,11 +34,37 @@
 </div>
 
 <% if @movies.present? %>
-  <ul id="tmdb_results">
-    <% @movies.each do |movie| %>
-      <li>
-        <%= movie['title'] %>
-      </li>
-    <% end %>
-  </ul>
+  <h1>Search Results</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Movie Title</th>
+        <th>Rating</th>
+        <th>Release Date</th>
+        <th>Synopsis</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr>
+          <td><%= movie['title'] %></td>
+          <td><%= movie['rating'] || 'R' %></td>
+          <td><%= movie['release_date'] %></td>
+          <td><%= movie['overview'] %></td>
+          <td>
+            <%= form_with url: add_movie_path, method: :post, local: true do %>
+              <%= hidden_field_tag 'movie[title]', movie['title'] %>
+              <%= hidden_field_tag 'movie[release_date]', movie['release_date'] %>
+              <%= hidden_field_tag 'movie[description]', movie['overview'] %>
+              <%= hidden_field_tag 'movie[rating]', 'R' %>
+
+              <%= submit_tag 'Add movie', class: 'btn btn-link p-0' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

@@ -17,8 +17,12 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '>= 1.4'
   gem 'webmock'
-  gem 'web-console'
+  
   gem 'simplecov'
+end
+
+group :development do
+  gem 'web-console'
 end
 
 group :test do

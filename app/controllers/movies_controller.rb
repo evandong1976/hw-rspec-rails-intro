@@ -61,6 +61,11 @@ class MoviesController < ApplicationController
 
     flash.now[:warning] = 'No movies found with given parameters!' if @movies.empty?
   end
+
+  def add_movie
+    movie = Movie.create!(movie_params)
+    redirect_to search_tmdb_path, notice: "#{movie.title} was successfully added to RottenPotatoes."
+  end
   
   private
 
@@ -82,5 +87,9 @@ class MoviesController < ApplicationController
 
   def sort_by
     params[:sort_by] || session[:sort_by] || 'id'
+  end
+
+  def movie_params
+    params.require(:movie).permit(:title, :rating, :description, :release_date)
   end
 end
