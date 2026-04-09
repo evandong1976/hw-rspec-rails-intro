@@ -4,6 +4,7 @@ gem 'rails', '~> 7.1.5'
 gem 'sprockets-rails'
 gem 'faraday'
 gem 'jquery-rails'
+gem 'puma'
 
 # for Heroku deployment - as described in Ap. A of ELLS book
 group :development, :test do
@@ -30,5 +31,8 @@ group :production do
   gem 'pg', '~> 1.5'
 end
 
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Required for timezone support on Linux (Gradescope)
 gem 'tzinfo-data'
+
