@@ -1,1 +1,1 @@
-https://polar-sands-16798-e0e735a48334.herokuapp.com/movies?ratings%5BG%5D=1&ratings%5BPG%5D=1&ratings%5BPG-13%5D=1&ratings%5BR%5D=1&sort_by=id
+https://polar-sands-16798-e0e735a48334.herokuapp.com

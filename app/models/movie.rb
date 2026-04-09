@@ -11,27 +11,31 @@ class Movie < ApplicationRecord
     end
   end
 
-  def self.find_in_tmdb(params)
-    response = Faraday.get('https://api.themoviedb.org/3/search/movie') do |req|
-      req.params['api_key'] = ENV['TMDB_API_KEY']
-      req.params['query'] = params[:title]
-      req.params['year'] = params[:release_year] unless params[:release_year].blank?
-      req.params['language'] = params[:language] unless params[:language].blank? || params[:language] == 'all'
+  def self.find_in_tmdb(search_params)
+    api_key = ENV['TMDB_API_KEY']
+
+    title = search_params[:title]
+    release_year = search_params[:release_year]
+    language = search_params[:language]
+
+    query = CGI.escape(title.to_s)
+    url = "https://api.themoviedb.org/3/search/movie?api_key=#{api_key}&query=#{query}"
+
+    response = Faraday.get(url)
+    data = JSON.parse(response.body)
+    results = data['results'] || []
+
+    if language == 'en'
+      results = results.select { |movie| movie['original_language'] == 'en' }
     end
 
-    parsed = JSON.parse(response.body)
-    results = parsed['results'] || []
-
-    results.map do |movie_data|
-      Movie.new(
-        title: movie_data['title'],
-        rating: 'R',
-        description: movie_data['overview'],
-        release_date: movie_data['release_date']
-      )
-    end.reject do |movie|
-      Movie.exists?(title: movie.title, release_date: movie.release_date)
+    if release_year.present?
+      results = results.select do |movie|
+        movie['release_date'].present? &&
+          movie['release_date'].start_with?(release_year)
+      end
     end
+
+    results
   end
-
 end

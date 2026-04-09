@@ -46,20 +46,25 @@ class MoviesController < ApplicationController
   end
 
   def search_tmdb
-    return if params[:title].nil?
+    return if params[:search_terms].nil?
 
-    if params[:title].blank?
+    if params[:search_terms].blank?
       flash.now[:warning] = 'Please fill in all required fields!'
       return
     end
 
     @movies = Movie.find_in_tmdb(
-      title: params[:title],
-      release_year: params[:release_year],
-      language: params[:language]
+      title: params[:search_terms],
+      release_year: params[:release_year].presence,
+      language: params[:language].presence
     )
 
     flash.now[:warning] = 'No movies found with given parameters!' if @movies.empty?
+  end
+
+  def add_movie
+    movie = Movie.create!(movie_params)
+    redirect_to search_tmdb_path, notice: "#{movie.title} was successfully added to RottenPotatoes."
   end
   
   private
@@ -82,5 +87,9 @@ class MoviesController < ApplicationController
 
   def sort_by
     params[:sort_by] || session[:sort_by] || 'id'
+  end
+
+  def movie_params
+    params.require(:movie).permit(:title, :rating, :description, :release_date)
   end
 end
