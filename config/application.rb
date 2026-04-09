@@ -37,7 +37,7 @@ module Rottenpotatoes
     config.filter_parameters += [:password]
     
     
-    #config.web_console.development_only = false
+    config.web_console.development_only = false
     
     
     # Enable the asset pipeline
