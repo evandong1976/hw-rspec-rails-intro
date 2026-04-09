@@ -9,7 +9,7 @@
 <%# Part 1 here %>
 <%= form_tag search_tmdb_path, method: :get, id: 'tmdb_form' do %>
     <label for="searchMovieName">Movie Name</label>
-    <%= text_field_tag 'title', nil, class: "form-control", id: "movie_title_field", placeholder: "Manhunter", id: "movie_title_field"%> 
+    <%= text_field_tag 'search_terms', nil, class: "form-control", id: "movie_title_field", placeholder: "Manhunter", id: "movie_title_field"%> 
     <label for="searchReleaseDateField">Release Year</label>
     <%= text_field_tag 'release_year', nil, class: "form-control", id: "movie_year_field", placeholder: "1986", id: "movie_year_field"%>
   
