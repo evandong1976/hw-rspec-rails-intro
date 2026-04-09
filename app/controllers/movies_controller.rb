@@ -53,7 +53,11 @@ class MoviesController < ApplicationController
       return
     end
 
-    @movies = Movie.find_in_tmdb(params[:search_terms])
+    @movies = Movie.find_in_tmdb(
+      title: params[:search_terms],
+      release_year: params[:release_year],
+      language: params[:language]
+    )
 
     flash.now[:warning] = 'No movies found with given parameters!' if @movies.empty?
   end
