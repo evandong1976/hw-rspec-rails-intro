@@ -10,4 +10,7 @@ class Movie < ApplicationRecord
       where(rating: ratings.map(&:upcase)).order sort_by
     end
   end
+
+  def self.find_in_tmdb(search_terms)
+  end
 end
