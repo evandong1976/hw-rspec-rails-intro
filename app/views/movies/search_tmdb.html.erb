@@ -24,6 +24,15 @@
   </div>
   <%= submit_tag 'Search', id: 'tmdb_submit', class: 'btn btn-warning col-2' %>
   <%= link_to 'Back to home page', movies_path, class: 'btn btn-secondary' %>
-  
 <% end %>
 </div>
+
+<% if @movies.present? %>
+  <ul id="tmdb_results">
+    <% @movies.each do |movie| %>
+      <li>
+        <%= movie['title'] %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
