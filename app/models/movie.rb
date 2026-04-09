@@ -11,6 +11,9 @@ class Movie < ApplicationRecord
     end
   end
 
+  def self.find_in_tmdb(string)
+    Faraday.get(string)
+
   def self.find_in_tmdb(search_terms, release_year = nil, language = nil)
     response = Faraday.get('https://api.themoviedb.org/3/search/movie') do |req|
       req.params['api_key'] = ENV['TMDB_API_KEY']
