@@ -46,15 +46,15 @@ class MoviesController < ApplicationController
   end
 
   def search_tmdb
-    return if params[:search_terms].nil?
+    return if params[:title].nil?
 
-    if params[:search_terms].blank?
+    if params[:title].blank?
       flash.now[:warning] = 'Please fill in all required fields!'
       return
     end
 
     @movies = Movie.find_in_tmdb(
-      title: params[:search_terms],
+      title: params[:title],
       release_year: params[:release_year],
       language: params[:language]
     )
